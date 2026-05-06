@@ -1,0 +1,56 @@
+### Variabel Konfigurasi
+@baseUrl = http://localhost:5000
+@imagePath = /D:/m-one/aio/test-case/testcase-v2/rembg/RemBG/lion.png
+
+### 1. Test Remove Background (Model Default: u2net)
+POST {{baseUrl}}/api/remove-bg
+Content-Type: multipart/form-data; boundary=boundary_separator
+
+--boundary_separator
+Content-Disposition: form-data; name="image"; filename="lion.png"
+Content-Type: image/png
+
+< D:/m-one/aio/test-case/testcase-v2/rembg/RemBG/lion.png
+--boundary_separator
+Content-Disposition: form-data; name="model"
+
+u2net
+--boundary_separator--
+
+### 2. Test Remove Background menggunakan Model ISNet
+POST {{baseUrl}}/api/remove-bg
+Content-Type: multipart/form-data; boundary=boundary_separator
+
+--boundary_separator
+Content-Disposition: form-data; name="image"; filename="input.png"
+Content-Type: image/png
+
+< {{imagePath}}
+--boundary_separator
+Content-Disposition: form-data; name="model"
+
+isnet-general-use
+--boundary_separator--
+
+### 3. Test Segment Anything (SAM) dengan Koordinat Klik
+POST {{baseUrl}}/api/remove-bg
+Content-Type: multipart/form-data; boundary=boundary_separator
+
+--boundary_separator
+Content-Disposition: form-data; name="image"; filename="input.png"
+Content-Type: image/png
+
+< {{imagePath}}
+--boundary_separator
+Content-Disposition: form-data; name="model"
+
+sam
+--boundary_separator
+Content-Disposition: form-data; name="x"
+
+150
+--boundary_separator
+Content-Disposition: form-data; name="y"
+
+200
+--boundary_separator--
